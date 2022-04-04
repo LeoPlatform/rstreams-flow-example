@@ -1,0 +1,73 @@
+service: rstreams-example
+
+plugins:
+  - serverless-leo
+  - serverless-webpack
+
+package:
+  individually: true
+#  artifact: ${{opt:artifact, ""}}
+
+custom:
+  convention:
+    functions:
+      folders:
+        - api
+        - bots
+      pattern:
+        - '*.yml'
+        - '*.yaml'
+    resources:
+      folders:
+        - cloudformation
+      pattern:
+        - '*.yml'
+        - '*.yaml'
+        - '*.js'
+        - '*.json'
+        - '*.ts'
+  included: ${{file(./node_modules/serverless-convention/index.js)}}
+  
+  dev:
+    leoStack: ${RStreamsBus}
+    environment:
+      RSTREAMS_CONFIG_SECRET: 
+        Fn::Sub: rstreams-${RStreamsBus}
+    stackParameters:
+      - ParameterKey: RStreamsBus
+        ParameterValue: ClintTestBus-Bus-1AU1ENWIRG4NO
+    # proper: Test
+    # leoStack: ClintTestBus-Bus-1AU1ENWIRG4NO
+  staging:
+    # proper: Staging
+    # leoStack: StagingBus
+  prod:
+    # proper: Prod
+    # leoStack: ProdBus
+  us-east-1:
+    deploymentBucket: leo-cli-publishbucket-19e80lsbylz0f
+  us-west-2:
+    deploymentBucket: leo-cli-publishbucket-13ickrmrh6vyd
+  no-region:
+    deploymentBucket: leo-cli-publishbucket-13ickrmrh6vyd
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  versionFunctions: false
+  lambdaHashingVersion: 20201221
+  deploymentBucket: ${{self:custom.${{opt:region, 'no-region'}}.deploymentBucket}}
+  stage: ${{opt:stage, 'dev'}}
+  
+  environment: ${{self:custom.${{self:provider.stage}}.environment}}
+
+  stackParameters: ${{self:custom.${{self:provider.stage}}.stackParameters}}
+
+  variableSyntax: "\\${{([ ~:a-zA-Z0-9._@\\'\",\\-\\/\\(\\)]+?)}}" # Allow Cloudformation to use ${}. Serverless will use ${{}}.
+
+functions:
+  - ${{self:custom.included.functions}} # Auto-include functions using serverless-convention
+
+resources:
+  - ${{self:custom.included.resources}} # Auto-include resources using serverless-convention
+

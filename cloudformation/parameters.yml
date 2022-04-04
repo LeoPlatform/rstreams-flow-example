@@ -1,0 +1,5 @@
+Parameters:
+  RStreamsBus:
+    Type: String
+    Description: "Name of the RStreams Bus stack"
+    MinLength: 1

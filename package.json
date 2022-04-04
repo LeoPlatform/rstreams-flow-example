@@ -1,0 +1,43 @@
+{
+  "name": "rstreams-example",
+  "version": "0.0.1",
+  "description": "description_of_microservice",
+  "private": true,
+  "scripts": {
+    "coverage-all": "tsc && cross-env NODE_ENV=utest node ./node_modules/nyc/bin/nyc.js --all node ./node_modules/mocha/bin/mocha --timeout 5000 \"./{,!(node_modules)/**/}*.utest.js\"",
+    "coverage": "tsc && cross-env NODE_ENV=utest node ./node_modules/nyc/bin/nyc.js node ./node_modules/mocha/bin/mocha --timeout 5000 \"./{,!(node_modules)/**/}*.utest.js\"",
+    "invoke": "tsc && cross-env-file -p ./.env.local.json serverless invoke-bot -s test -f",
+    "webpack": "webpack"
+  },
+  "dependencies": {
+    "axios": "^0.26.1",
+    "file-loader": "^6.2.0",
+    "leo-sdk": "^6.0.2"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.93",
+    "@types/chai": "^4.3.0",
+    "@types/mocha": "^9.1.0",
+    "@types/node": "^16.11.12",
+    "@types/pumpify": "^1.4.1",
+    "@types/sinon": "^10.0.11",
+    "@types/sinon-chai": "^3.2.8",
+    "chai": "^4.2.0",
+    "copy-webpack-plugin": "^10.2.4",
+    "cross-env": "^7.0.3",
+    "cross-env-file": "^1.0.0",
+    "mocha": "^9.2.2",
+    "nyc": "^15.1.0",
+    "serverless": "^2.30.3",
+    "serverless-convention": "^1.1.2",
+    "serverless-leo": "^2.0.1",
+    "serverless-webpack": "^5.4.0",
+    "sinon": "^13.0.1",
+    "sinon-chai": "^3.7.0",
+    "ts-loader": "^9.2.3",
+    "typescript": "^4.6.2",
+    "webpack": "^5.26.3",
+    "webpack-bundle-analyzer": "^3.3.2",
+    "webpack-node-externals": "^1.7.2"
+  }
+}
