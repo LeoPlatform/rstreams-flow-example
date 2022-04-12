@@ -1,6 +1,6 @@
 service: rstreams-example
-	
-variablesResolutionMode: 20210326
+
+frameworkVersion: '3'
 useDotenv: true
 
 plugins:
@@ -54,7 +54,6 @@ provider:
   name: aws
   runtime: nodejs14.x
   versionFunctions: false
-  lambdaHashingVersion: 20201221
   deploymentBucket: ${self:custom.${opt:region, 'no-region'}.deploymentBucket}
   stage: ${opt:stage, 'dev'}
   

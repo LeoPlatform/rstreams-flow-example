@@ -31,7 +31,7 @@
     "cross-env-file": "^1.0.0",
     "mocha": "^9.2.2",
     "nyc": "^15.1.0",
-    "serverless": "^2.30.3",
+    "serverless": "^3.12.0",
     "serverless-convention": "^1.2.1",
     "serverless-leo": "^2.2.1",
     "serverless-webpack": "^5.4.0",

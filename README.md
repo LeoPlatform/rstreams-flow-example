@@ -68,7 +68,7 @@ serverless create bot --name weather-processor
 
 # Invoke bot locally
  tsc && cross-env-file -p ./.env.local.json serverless invoke-bot -s test -f "weather-processor"
- serverless invoke-bot --stage dev -f "weather-processor"
+ npx serverless invoke-bot --stage dev -f "weather-processor"
   --  must use --stage instead of -s because useDotenv doesn't use -s  and doesn't resolve stage from provider
 
 # Build/Package up the Service
