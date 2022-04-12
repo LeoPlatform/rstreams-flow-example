@@ -55,6 +55,7 @@ add cloudformation/parameters.yml
 
 # 6) Invoke bot locally
  tsc && cross-env-file -p ./.env.local.json serverless invoke-bot -s test -f "weather-loader"
+ serverless invoke-bot --stage dev -f "weather-loader"
 
 # Add another bot
 serverless create bot --name weather-processor
@@ -67,6 +68,8 @@ serverless create bot --name weather-processor
 
 # Invoke bot locally
  tsc && cross-env-file -p ./.env.local.json serverless invoke-bot -s test -f "weather-processor"
+ serverless invoke-bot --stage dev -f "weather-processor"
+  --  must use --stage instead of -s because useDotenv doesn't use -s  and doesn't resolve stage from provider
 
 # Build/Package up the Service
 serverless package

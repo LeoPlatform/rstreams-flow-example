@@ -1,6 +1,5 @@
 const path = require('path');
 const slsw = require("serverless-webpack");
-const WebpackSourceMapSupport = require("webpack-source-map-support");
 
 module.exports = (async () => {
   return {
@@ -12,7 +11,6 @@ module.exports = (async () => {
       ? 'source-map'
       : 'source-map',
     mode: slsw.lib.webpack.isLocal ? "development" : "production",
-    // plugins: [new WebpackSourceMapSupport()],
     module: {
       rules: [
         // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`

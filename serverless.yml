@@ -31,27 +31,18 @@ custom:
         - '*.ts'
   included: ${file(./node_modules/serverless-convention/index.js)}
   
+  leoStack: ${RStreamsBus}
   dev:
-    leoStack: ${RStreamsBus}
-    environment:
-      RSTREAMS_CONFIG_SECRET: 
-        Fn::Sub: rstreams-${RStreamsBus}
+    # leoStack: ${RStreamsBus}
     stackParameters:
       - ParameterKey: RStreamsBus
         ParameterValue: ClintTestBus-Bus-1AU1ENWIRG4NO
-    # proper: Test
-    # leoStack: ClintTestBus-Bus-1AU1ENWIRG4NO
   test:
-    environment:
-      empty: true
-    stackParameters:
-      empty: true
+    # stackParameters:
   staging:
-    # proper: Staging
-    # leoStack: StagingBus
+    # stackParameters:
   prod:
-    # proper: Prod
-    # leoStack: ProdBus
+    # stackParameters:
   us-east-1:
     deploymentBucket: leo-cli-publishbucket-19e80lsbylz0f
   us-west-2:
@@ -67,11 +58,11 @@ provider:
   deploymentBucket: ${self:custom.${opt:region, 'no-region'}.deploymentBucket}
   stage: ${opt:stage, 'dev'}
   
-  environment: ${self:custom.${self:provider.stage}.environment}
+  environment:
+    RSTREAMS_CONFIG_SECRET: 
+      Fn::Sub: rstreams-${RStreamsBus}
 
   stackParameters: ${self:custom.${self:provider.stage}.stackParameters}
-
-  #variableSyntax: "\\${{([ ~:a-zA-Z0-9._@\\'\",\\-\\/\\(\\)]+?)}}" # Allow Cloudformation to use ${}. Serverless will use ${{}}.
 
 functions:
   - ${self:custom.included.functions} # Auto-include functions using serverless-convention
