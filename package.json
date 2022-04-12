@@ -15,8 +15,7 @@
   "dependencies": {
     "axios": "^0.26.1",
     "file-loader": "^6.2.0",
-    "leo-sdk": "^6.0.2",
-    "webpack-source-map-support": "^2.0.1"
+    "leo-sdk": "^6.0.2"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.93",
@@ -34,7 +33,7 @@
     "nyc": "^15.1.0",
     "serverless": "^2.30.3",
     "serverless-convention": "^1.2.1",
-    "serverless-leo": "^2.0.1",
+    "serverless-leo": "^2.2.1",
     "serverless-webpack": "^5.4.0",
     "sinon": "^13.0.1",
     "sinon-chai": "^3.7.0",
