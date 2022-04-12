@@ -1,4 +1,7 @@
 service: rstreams-example
+	
+variablesResolutionMode: 20210326
+useDotenv: true
 
 plugins:
   - serverless-leo
@@ -6,7 +9,7 @@ plugins:
 
 package:
   individually: true
-#  artifact: ${{opt:artifact, ""}}
+#  artifact: ${opt:artifact, ""}
 
 custom:
   convention:
@@ -26,7 +29,7 @@ custom:
         - '*.js'
         - '*.json'
         - '*.ts'
-  included: ${{file(./node_modules/serverless-convention/index.js)}}
+  included: ${file(./node_modules/serverless-convention/index.js)}
   
   dev:
     leoStack: ${RStreamsBus}
@@ -38,6 +41,11 @@ custom:
         ParameterValue: ClintTestBus-Bus-1AU1ENWIRG4NO
     # proper: Test
     # leoStack: ClintTestBus-Bus-1AU1ENWIRG4NO
+  test:
+    environment:
+      empty: true
+    stackParameters:
+      empty: true
   staging:
     # proper: Staging
     # leoStack: StagingBus
@@ -56,18 +64,18 @@ provider:
   runtime: nodejs14.x
   versionFunctions: false
   lambdaHashingVersion: 20201221
-  deploymentBucket: ${{self:custom.${{opt:region, 'no-region'}}.deploymentBucket}}
-  stage: ${{opt:stage, 'dev'}}
+  deploymentBucket: ${self:custom.${opt:region, 'no-region'}.deploymentBucket}
+  stage: ${opt:stage, 'dev'}
   
-  environment: ${{self:custom.${{self:provider.stage}}.environment}}
+  environment: ${self:custom.${self:provider.stage}.environment}
 
-  stackParameters: ${{self:custom.${{self:provider.stage}}.stackParameters}}
+  stackParameters: ${self:custom.${self:provider.stage}.stackParameters}
 
-  variableSyntax: "\\${{([ ~:a-zA-Z0-9._@\\'\",\\-\\/\\(\\)]+?)}}" # Allow Cloudformation to use ${}. Serverless will use ${{}}.
+  #variableSyntax: "\\${{([ ~:a-zA-Z0-9._@\\'\",\\-\\/\\(\\)]+?)}}" # Allow Cloudformation to use ${}. Serverless will use ${{}}.
 
 functions:
-  - ${{self:custom.included.functions}} # Auto-include functions using serverless-convention
+  - ${self:custom.included.functions} # Auto-include functions using serverless-convention
 
 resources:
-  - ${{self:custom.included.resources}} # Auto-include resources using serverless-convention
+  - ${self:custom.included.resources} # Auto-include resources using serverless-convention
 

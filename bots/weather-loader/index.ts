@@ -1,32 +1,43 @@
 "use strict";
-import rstreamssdk, { BotInvocationEvent, Event } from "leo-sdk";
+import { BotInvocationEvent, RStreamsContext } from "leo-sdk";
 import botWrapper from "leo-sdk/wrappers/cron";
-import { WeatherData } from "../../lib/types";
-//import { BotInvocationEvent } from "leo-sdk/lib/types";
+import { LatLng, WeatherData } from "../../lib/types";
 import axios from "axios";
 
-let sdk = rstreamssdk();
+//let sdk = rstreamssdk();
 
-let e: Event<any>;
 interface LoaderBotInvocationEvent extends BotInvocationEvent {
   destination: string;
 }
 
-export const handler = botWrapper(async function (event: LoaderBotInvocationEvent) {
 
+// botid: rstreams-example-dev-weather-loader
+export const handler = botWrapper(async function (event: LoaderBotInvocationEvent, context: RStreamsContext) {
+  //sdk = sdk.wrap(event.botId);
   console.log("Invocation Event:", JSON.stringify(event, null, 2));
 
-  let weatherData = await getWeather("ea73496afd07c4af25ddf1fa4ba4608574bc0cba661621bfcdf7a9421039f1c0")
+  let weatherData = await getWeather({ lat: 40.35, lng: -111.90 });
 
-  //await putEvent(event.botId, event.destination, weatherData);
-  await sdk.putEvent(event.botId, event.destination, weatherData);
+  await context.sdk.putEvent(event.botId, event.destination, weatherData);
 
+  //await sdk.getEvents("queue", ["eid"]);
+  //sdk.createGenerator<MyGenerationType>(()=>myCustomQueryForTheNextSetOfData());
 });
 
-async function getWeather(id: string): Promise<WeatherData> {
-  let response = await axios.get(`https://weather.com/weather/today/l/${id}`);
-  let parts = JSON.parse(JSON.parse((response.data.match(/window.__data=JSON.parse\((.*?)\);/) || [])[1] || ""))
-  let data = (Object.values(parts.dal.getSunV3CurrentObservationsUrlConfig)[0] as any).data;
-  data.id = id;
+async function getWeather(location: LatLng): Promise<WeatherData> {
+
+  let response = await axios.post("https://weather.com/api/v1/p/redux-dal", [
+    {
+      "name": "getSunV3CurrentObservationsUrlConfig",
+      "params": {
+        "geocode": `${location.lat},${location.lng}`,
+        "units": "e",
+        "language": "en-US"
+      }
+    }
+  ]);
+
+  let data = (Object.values(response.data.dal.getSunV3CurrentObservationsUrlConfig)[0] as any).data as WeatherData;
+  data.location = location;
   return data;
 }

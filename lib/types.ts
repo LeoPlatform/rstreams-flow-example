@@ -1,5 +1,10 @@
+export interface LatLng {
+	lat: number;
+	lng: number;
+}
+
 export interface WeatherData {
-	id: string;
+	location: LatLng;
 	cloudCeiling: number
 	cloudCoverPhrase: string;
 	dayOfWeek: string;
@@ -49,7 +54,7 @@ export interface WeatherData {
 }
 
 export interface WeatherDataTransformed {
-	id: string;
+	location: LatLng;
 	cloud_ceiling: number
 	cloud_cover_phrase: string;
 	day_of_week: string;

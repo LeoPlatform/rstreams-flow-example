@@ -4,6 +4,7 @@ import botWrapper from "leo-sdk/wrappers/cron";
 import { WeatherData, WeatherDataTransformed } from "../../lib/types";
 import { BotInvocationEvent } from "leo-sdk/lib/types";
 
+
 let sdk = rstreamssdk();
 
 interface ProcessorBotInvocationEvent extends BotInvocationEvent {
@@ -35,7 +36,7 @@ export const handler = botWrapper(async function lambdaHandler(event: ProcessorB
 
 function mapWeatherDataToWeatherDataTransformed(weather: WeatherData): WeatherDataTransformed {
   return {
-    id: weather.id,
+    location: weather.location,
     cloud_ceiling: weather.cloudCeiling,
     cloud_cover_phrase: weather.cloudCoverPhrase,
     day_of_week: weather.dayOfWeek,
@@ -86,3 +87,4 @@ function mapWeatherDataToWeatherDataTransformed(weather: WeatherData): WeatherDa
     }
   }
 }
+
