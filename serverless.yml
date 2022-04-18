@@ -12,6 +12,8 @@ package:
 #  artifact: ${opt:artifact, ""}
 
 custom:
+  leo:
+    botIdExcludeStage: true
   convention:
     functions:
       folders:

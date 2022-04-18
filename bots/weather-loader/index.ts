@@ -4,8 +4,6 @@ import botWrapper from "leo-sdk/wrappers/cron";
 import { LatLng, WeatherData } from "../../lib/types";
 import axios from "axios";
 
-//let sdk = rstreamssdk();
-
 interface LoaderBotInvocationEvent extends BotInvocationEvent {
   destination: string;
 }

@@ -51,6 +51,15 @@ Thumbs.db
 
 #Serverless Framework
 .serverless
+.webpack
 
 *.js.map
 *.js
+
+# Code coverage
+.vscode
+/coverage
+/.nyc_output
+
+# Test output data
+.mock-data/*/output-data

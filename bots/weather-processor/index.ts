@@ -1,35 +1,32 @@
 "use strict";
-import rstreamssdk from "leo-sdk";
+import { RStreamsSdk } from "leo-sdk";
 import botWrapper from "leo-sdk/wrappers/cron";
 import { WeatherData, WeatherDataTransformed } from "../../lib/types";
 import { BotInvocationEvent } from "leo-sdk/lib/types";
 
 
-let sdk = rstreamssdk();
+let sdk = new RStreamsSdk();
 
-interface ProcessorBotInvocationEvent extends BotInvocationEvent {
+export interface ProcessorBotInvocationEvent extends BotInvocationEvent {
   queue: string;
   destination: string;
 }
 
 export const handler = botWrapper(async function lambdaHandler(event: ProcessorBotInvocationEvent) {
-
   console.log("Invocation Event:", JSON.stringify(event, null, 2));
 
-  await new Promise((resolve, reject) => {
-    sdk.enrich<WeatherData, WeatherDataTransformed>({
-      id: event.botId,
-      inQueue: event.queue,
-      outQueue: event.destination,
-      config: undefined,
-      transform: function (weather, _wrapper, done) {
-        if (weather == null) {
-          done(null, true);
-          return;
-        }
-        done(null, mapWeatherDataToWeatherDataTransformed(weather));
+  await sdk.enrichEvents<WeatherData, WeatherDataTransformed>({
+    id: event.botId,
+    inQueue: event.queue,
+    outQueue: event.destination,
+    config: undefined,
+    transform: function (weather, _wrapper, done) {
+      if (weather == null) {
+        done(null, true);
+        return;
       }
-    }, (err) => err ? reject(err) : resolve(undefined))
+      done(null, mapWeatherDataToWeatherDataTransformed(weather));
+    }
   });
 });
 
