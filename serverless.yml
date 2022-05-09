@@ -14,6 +14,15 @@ package:
 custom:
   leo:
     botIdExcludeStage: true
+    configurationPath: project-config-new.def.json
+
+    rsfConfigResolutionType: secretsmanager
+    _rsfConfigResolutionType: secretsmanager|env
+    replicationRegions: 
+      - us-east-1 => us-west-2
+      - us-west-2 => us-east-1 
+      - europe-west-2
+
   convention:
     functions:
       folders:
@@ -35,10 +44,11 @@ custom:
   
   leoStack: ${RStreamsBus}
   dev:
-    # leoStack: ${RStreamsBus}
     stackParameters:
       - ParameterKey: RStreamsBus
-        ParameterValue: ClintTestBus-Bus-1AU1ENWIRG4NO
+        ParameterValue: ClintTestBus-Bus
+      - ParameterKey: MyStage2
+        ParameterValue: Prod
   test:
     # stackParameters:
   staging:
@@ -60,8 +70,10 @@ provider:
   stage: ${opt:stage, 'dev'}
   
   environment:
-    RSTREAMS_CONFIG_SECRET: 
-      Fn::Sub: rstreams-${RStreamsBus}
+    # stuff: ${cf:TestBus.LeoStream}
+    # stuff2: '{{resolve:secretsmanager:rstreams-TestBus:SecretString:::}}'
+    # RSTREAMS_CONFIG_SECRET: 
+    #   Fn::Sub: rstreams-${RStreamsBus}
 
   stackParameters: ${self:custom.${self:provider.stage}.stackParameters}
 

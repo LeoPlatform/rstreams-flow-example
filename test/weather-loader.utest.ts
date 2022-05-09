@@ -1,3 +1,5 @@
+
+process.env.STAGE = "test";
 import sinon from "sinon";
 import chai, { assert, expect } from "chai";
 import sinonchai from "sinon-chai";

@@ -13,12 +13,15 @@
     "test-sls": "npx serverless invoke-bot --stage dev --runner sls --function",
     "test": "serverless invoke-bot --stage dev --function",
     "watch": "tsc -w",
+    "watch-config": "serverless watch-config",
     "webpack": "webpack"
   },
   "dependencies": {
     "axios": "^0.26.1",
+    "deasync": "^0.1.26",
     "file-loader": "^6.2.0",
-    "leo-sdk": "^6.0.3"
+    "leo-sdk": "^6.0.3",
+    "ts-interface-checker": "^1.0.2"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.93",
@@ -28,6 +31,8 @@
     "@types/pumpify": "^1.4.1",
     "@types/sinon": "^10.0.11",
     "@types/sinon-chai": "^3.2.8",
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0",
     "chai": "^4.2.0",
     "copy-webpack-plugin": "^10.2.4",
     "cross-env": "^7.0.3",

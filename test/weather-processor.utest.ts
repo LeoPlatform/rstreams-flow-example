@@ -5,7 +5,7 @@ chai.use(sinonchai);
 import { Handler } from "aws-lambda";
 
 import { createContext, createBotInvocationEvent } from "leo-sdk/lib/mock";
-import rstreamsSdk, { ConfigurationResources, EnrichOptions, Event, ReadEvent, RStreamsSdk } from "leo-sdk";
+import rstreamsSdk, { ConfigurationResources, EnrichOptions, Event, ReadableStream, ReadEvent, RStreamsSdk, StatsStream } from "leo-sdk";
 import { promisify } from "util";
 import { ProcessorBotInvocationEvent } from "bots/weather-processor";
 import { eventIdFromTimestamp, eventstream, through } from "leo-sdk/lib/streams";
@@ -110,10 +110,11 @@ describe("weather-processor", function () {
 				if (typeof data1 !== "boolean") {
 					dataWritten.push(data1);
 				}
-				let event2: ReadEvent<WeatherData> = {
+				let event2: ReadEvent<WeatherData | undefined> = {
 					eid: eventIdFromTimestamp(start, "full", count++),
 					id: "MockBot",
-					event: "MockQueue"
+					event: "MockQueue",
+					payload: undefined
 				}
 				let data2 = await transform(event2.payload, event2);
 				assert.isBoolean(data2);
@@ -257,7 +258,7 @@ describe("weather-processor", function () {
 			let dataWritten: Event<WeatherDataTransformed>[] = [];
 
 			let fromLeo = sandbox.stub(sdk.streams, "fromLeo").callsFake(() => {
-				return eventstream.readArray(mockReadData)
+				return eventstream.readArray(mockReadData) as unknown as ReadableStream<ReadEvent<unknown>> & StatsStream
 			});
 
 			let toLeo = sandbox.stub(sdk.streams, "toLeo").callsFake(() => through((data: Event<WeatherDataTransformed>, done) => {

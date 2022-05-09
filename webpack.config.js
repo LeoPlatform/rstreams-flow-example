@@ -44,5 +44,6 @@ module.exports = (async () => {
       symlinks: false,
     },
     target: "node",
+    // stats: { errorDetails: true }
   };
 })();
