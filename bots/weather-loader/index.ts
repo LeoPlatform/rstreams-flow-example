@@ -9,10 +9,8 @@ interface LoaderBotInvocationEvent extends BotInvocationEvent {
   destination: string;
 }
 
-
-// botid: rstreams-example-dev-weather-loader
+// botid: ${self:service}-weather-loader
 export const handler = botWrapper(async function (event: LoaderBotInvocationEvent, context: RStreamsContext) {
-  //sdk = sdk.wrap(event.botId);
   console.log("Invocation Event:", JSON.stringify(event, null, 2));
   console.log(configuration.defaultNumRetries, configuration.item.endpoint);
   console.log(configuration);
@@ -20,9 +18,6 @@ export const handler = botWrapper(async function (event: LoaderBotInvocationEven
   let weatherData = await getWeather({ lat: 40.35, lng: -111.90 });
 
   await context.sdk.putEvent(event.botId, event.destination, weatherData);
-
-  //await sdk.getEvents("queue", ["eid"]);
-  //sdk.createGenerator<MyGenerationType>(()=>myCustomQueryForTheNextSetOfData());
 });
 
 async function getWeather(location: LatLng): Promise<WeatherData> {

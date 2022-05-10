@@ -50,5 +50,10 @@
     "webpack": "^5.26.3",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-node-externals": "^1.7.2"
+  },
+  "srf-tokens": {
+    "project-name": "rstreams-example",
+    "rstreams-bus": "ClintTestBus-Bus",
+    "region": "us-west-2"
   }
 }

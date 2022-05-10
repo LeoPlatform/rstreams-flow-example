@@ -7,5 +7,5 @@ weather-processor:
   role: BotRole
   events:
     - leo:
-        queue: rstreams-example.weather
-        destination: rstreams-example.weather-transformed
+        queue: ${self:service}.weather
+        destination: ${self:service}.weather-transformed
