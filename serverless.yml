@@ -13,6 +13,12 @@ package:
 
 custom:
   leo:
+    rsfVersion: 3,
+    rsfTemplateTokens:
+      project-name: "rstreams-example"
+      rstreams-bus: "ClintTestBus-Bus"
+      region: "us-west-2"
+
     botIdExcludeStage: true
     configurationPath: project-config-new.def.json
 

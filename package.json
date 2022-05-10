@@ -18,10 +18,7 @@
   },
   "dependencies": {
     "axios": "^0.26.1",
-    "deasync": "^0.1.26",
-    "file-loader": "^6.2.0",
-    "leo-sdk": "^6.0.3",
-    "ts-interface-checker": "^1.0.2"
+    "leo-sdk": "^6.0.3"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.93",
@@ -34,7 +31,6 @@
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
     "chai": "^4.2.0",
-    "copy-webpack-plugin": "^10.2.4",
     "cross-env": "^7.0.3",
     "cross-env-file": "^1.0.0",
     "mocha": "^9.2.2",
@@ -47,13 +43,6 @@
     "sinon-chai": "^3.7.0",
     "ts-loader": "^9.2.3",
     "typescript": "^4.6.2",
-    "webpack": "^5.26.3",
-    "webpack-bundle-analyzer": "^3.3.2",
-    "webpack-node-externals": "^1.7.2"
-  },
-  "srf-tokens": {
-    "project-name": "rstreams-example",
-    "rstreams-bus": "ClintTestBus-Bus",
-    "region": "us-west-2"
+    "webpack": "^5.26.3"
   }
 }
