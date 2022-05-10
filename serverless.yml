@@ -23,7 +23,6 @@ custom:
     configurationPath: project-config-new.def.json
 
     rsfConfigResolutionType: secretsmanager
-    _rsfConfigResolutionType: secretsmanager|env
     replicationRegions: 
       - us-east-1 => us-west-2
       - us-west-2 => us-east-1 
@@ -61,18 +60,18 @@ custom:
     # stackParameters:
   prod:
     # stackParameters:
-  us-east-1:
-    deploymentBucket: leo-cli-publishbucket-19e80lsbylz0f
-  us-west-2:
-    deploymentBucket: leo-cli-publishbucket-13ickrmrh6vyd
-  no-region:
-    deploymentBucket: leo-cli-publishbucket-13ickrmrh6vyd
+  # us-east-1:
+  #   deploymentBucket: leo-cli-publishbucket-19e80lsbylz0f
+  # us-west-2:
+  #   deploymentBucket: leo-cli-publishbucket-13ickrmrh6vyd
+  # no-region:
+  #   deploymentBucket: leo-cli-publishbucket-13ickrmrh6vyd
 
 provider:
   name: aws
   runtime: nodejs14.x
   versionFunctions: false
-  deploymentBucket: ${self:custom.${opt:region, 'no-region'}.deploymentBucket}
+  # deploymentBucket: ${self:custom.${opt:region, 'no-region'}.deploymentBucket}
   stage: ${opt:stage, 'dev'}
   
   stackParameters: ${self:custom.${self:provider.stage}.stackParameters}
