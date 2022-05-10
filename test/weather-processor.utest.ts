@@ -5,13 +5,13 @@ chai.use(sinonchai);
 import { Handler } from "aws-lambda";
 
 import { createContext, createBotInvocationEvent } from "leo-sdk/lib/mock";
-import rstreamsSdk, { ConfigurationResources, EnrichOptions, Event, ReadableStream, ReadEvent, RStreamsSdk, StatsStream } from "leo-sdk";
+import rstreamsSdk, { BaseEvent, ConfigurationResources, EnrichOptions, Event, ReadableStream, ReadEvent, RStreamsSdk, StatsStream } from "leo-sdk";
 import { promisify } from "util";
 import { ProcessorBotInvocationEvent } from "bots/weather-processor";
 import { eventIdFromTimestamp, eventstream, through } from "leo-sdk/lib/streams";
 import { WeatherData, WeatherDataTransformed } from "lib/types";
 
-let mockConfig: ConfigurationResources = {
+const mockConfig: ConfigurationResources = {
 	Region: "mock-Region",
 	LeoEvent: "mock-LeoEvent",
 	LeoStream: "mock-LeoStream",
@@ -20,16 +20,16 @@ let mockConfig: ConfigurationResources = {
 	LeoKinesisStream: "mock-LeoKinesisStream",
 	LeoFirehoseStream: "mock-LeoFirehoseStream",
 	LeoSettings: "mock-LeoSettings"
-}
+};
 global.rstreams_config = mockConfig;
 
 describe("weather-processor", function () {
-	let sandbox = sinon.createSandbox();
-	let sdk: RStreamsSdk = new RStreamsSdk(mockConfig);
+	const sandbox = sinon.createSandbox();
+	const sdk: RStreamsSdk = new RStreamsSdk(mockConfig);
 	let handler: Handler<ProcessorBotInvocationEvent>;
 	beforeEach(() => {
 		sandbox.mock(sdk);
-		sandbox.stub(rstreamsSdk as any, "RStreamsSdk").returns(sdk);
+		sandbox.stub(rstreamsSdk as unknown as { RStreamsSdk: () => RStreamsSdk }, "RStreamsSdk").returns(sdk);
 
 		handler = require("../bots/weather-processor").handler;
 	});
@@ -40,9 +40,9 @@ describe("weather-processor", function () {
 	describe("handler", function () {
 
 		it("process events - success", async function () {
-			let start = 1650309625992;
+			const start = 1650309625992;
 			let count = 0;
-			let mockReadData: WeatherData = {
+			const mockReadData: WeatherData = {
 
 				location: {
 					lat: 40.35,
@@ -96,27 +96,27 @@ describe("weather-processor", function () {
 				wxPhraseShort: "Sunny"
 			};
 
-			let dataWritten: WeatherDataTransformed[] = [];
+			const dataWritten: WeatherDataTransformed[] = [];
 			let error: Error;
-			let enrichEvents = sandbox.stub(sdk, "enrichEvents").callsFake(async (options: EnrichOptions<WeatherData, WeatherDataTransformed>) => {
-				let event1: ReadEvent<WeatherData> = {
+			const enrichEvents = sandbox.stub(sdk, "enrichEvents").callsFake(async (options: EnrichOptions<WeatherData, WeatherDataTransformed>) => {
+				const event1: ReadEvent<WeatherData> = {
 					eid: eventIdFromTimestamp(start, "full", count++),
 					id: "MockBot",
 					event: "MockQueue",
 					payload: mockReadData
-				}
-				let transform = promisify(options.transform);
-				let data1 = await transform(event1.payload, event1)
+				};
+				const transform = promisify(options.transform);
+				const data1 = await transform(event1.payload, event1);
 				if (typeof data1 !== "boolean") {
 					dataWritten.push(data1);
 				}
-				let event2: ReadEvent<WeatherData | undefined> = {
+				const event2: ReadEvent<WeatherData | undefined> = {
 					eid: eventIdFromTimestamp(start, "full", count++),
 					id: "MockBot",
 					event: "MockQueue",
 					payload: undefined
-				}
-				let data2 = await transform(event2.payload, event2);
+				};
+				const data2 = await transform(event2.payload, event2);
 				assert.isBoolean(data2);
 				assert.isTrue(data2);
 			});
@@ -125,7 +125,7 @@ describe("weather-processor", function () {
 			await promisify(handler)(createBotInvocationEvent("BotId", {
 				queue: "SourceMockQueue",
 				destination: "DestMockQueue"
-			}), createContext({ Timeout: 30 }))
+			}), createContext({ Timeout: 30 }));
 
 			assert.isUndefined(error);
 			expect(enrichEvents).called;
@@ -190,9 +190,9 @@ describe("weather-processor", function () {
 		});
 
 		it("process events - mock sdk internals - success", async function () {
-			let start = 1650309625992;
+			const start = 1650309625992;
 			let count = 0;
-			let mockReadData: ReadEvent<WeatherData>[] = [{
+			const mockReadData: ReadEvent<WeatherData>[] = [{
 
 				location: {
 					lat: 40.35,
@@ -252,16 +252,16 @@ describe("weather-processor", function () {
 					payload: data,
 					timestamp: start,
 					event_source_timestamp: start
-				}
+				};
 			});
 
-			let dataWritten: Event<WeatherDataTransformed>[] = [];
+			const dataWritten: BaseEvent<WeatherDataTransformed>[] = [];
 
-			let fromLeo = sandbox.stub(sdk.streams, "fromLeo").callsFake(() => {
-				return eventstream.readArray(mockReadData) as unknown as ReadableStream<ReadEvent<unknown>> & StatsStream
+			const fromLeo = sandbox.stub(sdk.streams, "fromLeo").callsFake(() => {
+				return eventstream.readArray(mockReadData) as unknown as ReadableStream<ReadEvent<unknown>> & StatsStream;
 			});
 
-			let toLeo = sandbox.stub(sdk.streams, "toLeo").callsFake(() => through((data: Event<WeatherDataTransformed>, done) => {
+			const toLeo = sandbox.stub(sdk.streams, "toLeo").callsFake(() => through((data: Event<WeatherDataTransformed>, done) => {
 
 				// Read Data actually allows eid to be pass but only internally so remove it 
 				// so the assert.deepEquals works below
@@ -273,7 +273,7 @@ describe("weather-processor", function () {
 			await promisify(handler)(createBotInvocationEvent("BotId", {
 				queue: "SourceMockQueue",
 				destination: "DestMockQueue"
-			}), createContext({ Timeout: 30 }))
+			}), createContext({ Timeout: 30 }));
 
 			expect(fromLeo).called;
 			expect(toLeo).called;
@@ -351,7 +351,7 @@ describe("weather-processor", function () {
 						},
 						"event_source_timestamp": 1650309625992,
 						"id": "BotId"
-					} as any
+					}
 				]
 			);
 		});

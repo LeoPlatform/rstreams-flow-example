@@ -24,7 +24,7 @@ describe("weather-loader", function () {
 	describe("handler", function () {
 
 		it("get weather - success", async function () {
-			let putEvent = sandbox.stub(sdk, "putEvent").returns(Promise.resolve());
+			const putEvent = sandbox.stub(sdk, "putEvent").returns(Promise.resolve());
 			sandbox.stub(axios, "post").callsFake(() => {
 				return Promise.resolve({
 					data: {
@@ -155,12 +155,12 @@ describe("weather-loader", function () {
 		});
 
 		it("get weather - fail", async function () {
-			let putEvent = sandbox.stub(sdk, "putEvent").returns(Promise.resolve());
+			const putEvent = sandbox.stub(sdk, "putEvent").returns(Promise.resolve());
 			sandbox.stub(axios, "post").callsFake(() => {
 				return Promise.reject(new Error("Bad api call"));
 			});
 
-			let result = await promisify(handler)(createBotInvocationEvent("BotId", {
+			const result = await promisify(handler)(createBotInvocationEvent("BotId", {
 				destination: "MockQueue"
 			}), createContext({ Timeout: 30 }));
 

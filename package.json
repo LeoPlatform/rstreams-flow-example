@@ -13,7 +13,8 @@
     "test": "serverless invoke-bot --stage dev --function",
     "watch": "tsc -w",
     "watch-config": "serverless watch-config",
-    "webpack": "webpack"
+    "webpack": "webpack",
+    "lint": "eslint ."
   },
   "dependencies": {
     "axios": "^0.26.1",

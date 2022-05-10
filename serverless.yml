@@ -69,12 +69,6 @@ provider:
   deploymentBucket: ${self:custom.${opt:region, 'no-region'}.deploymentBucket}
   stage: ${opt:stage, 'dev'}
   
-  environment:
-    # stuff: ${cf:TestBus.LeoStream}
-    # stuff2: '{{resolve:secretsmanager:rstreams-TestBus:SecretString:::}}'
-    # RSTREAMS_CONFIG_SECRET: 
-    #   Fn::Sub: rstreams-${RStreamsBus}
-
   stackParameters: ${self:custom.${self:provider.stage}.stackParameters}
 
 functions:

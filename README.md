@@ -63,8 +63,8 @@ serverless create bot --name weather-processor
 # Add Event to the bot
   events:
     - leo:
-        source: rstreams-example.weather
-        destination: rstreams-example.weather-transformed
+        source: ${self:service}.weather
+        destination: ${self:service}.weather-transformed
 
 # Invoke bot locally
  tsc && cross-env-file -p ./.env.local.json serverless invoke-bot -s test -f "weather-processor"
