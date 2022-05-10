@@ -1,6 +1,6 @@
 import { ProjectConfigNew } from "project-config-new"
 
-let config: ProjectConfigNew = {
+let mockProjectConfig: ProjectConfigNew = {
 	item: {
 		endpoint: "mock-item-endpoint"
 	},
@@ -24,4 +24,6 @@ let config: ProjectConfigNew = {
 		},
 	},
 }
-process.env.RSF_CONFIG = JSON.stringify(config)
+
+// RStreams Flow supports setting global.rsf_config, process.rsf_config, or process.env.RSF_CONFIG
+global.rsf_config = mockProjectConfig
