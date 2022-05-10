@@ -4,10 +4,9 @@
   "description": "description_of_microservice",
   "private": true,
   "scripts": {
-    "coverage-all": "tsc && cross-env NODE_ENV=utest node ./node_modules/nyc/bin/nyc.js --all node ./node_modules/mocha/bin/mocha --timeout 5000 \"./{,!(node_modules)/**/}*.utest.js\"",
-    "coverage": "tsc && cross-env NODE_ENV=utest node ./node_modules/nyc/bin/nyc.js node ./node_modules/mocha/bin/mocha --timeout 5000 \"./{,!(node_modules)/**/}*.utest.js\"",
+    "coverage-all": "node ./node_modules/nyc/bin/nyc.js --all node ./node_modules/mocha/bin/mocha --timeout 5000 \"./{,!(node_modules)/**/}*.utest.js\"",
+    "coverage": "node ./node_modules/nyc/bin/nyc.js node ./node_modules/mocha/bin/mocha --timeout 5000 \"./{,!(node_modules)/**/}*.utest.js\"",
     "utest": "mocha \"**/*.utest.js\"",
-    "invoke": "tsc && cross-env-file -p ./.env.local.json serverless invoke-bot -s test -f",
     "package": "serverless package",
     "deploy-dev": "serverless deploy --package ./.serverless --region us-west-2 --stage dev",
     "test-sls": "npx serverless invoke-bot --stage dev --runner sls --function",

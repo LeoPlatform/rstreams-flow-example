@@ -7,6 +7,7 @@ chai.use(sinonchai);
 
 import { createContext, createBotInvocationEvent } from "leo-sdk/lib/mock";
 import sdk from "leo-sdk";
+import "./mock-config-setup";
 import { handler } from "../bots/weather-loader";
 import axios from "axios";
 import { promisify } from "util";
