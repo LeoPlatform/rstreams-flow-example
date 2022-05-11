@@ -1,0 +1,34 @@
+{
+	"item": {
+		"endpoint": "cf::${MyStage2}Auth-LeoAuth::string"
+	},
+	"mysqlPortRegion": "secret::${stage}/${region}/fake_db/connection.port::int",
+	"mysqlPortRegion2": "secret::${Stage}/${region}/fake_db/connection.port::int",
+	"mysqlPort": "secret::${stage}/${region}/fake_db/connection.port::int",
+	"mysqlPassword": "secret::${stage}/${region}/fake_db/connection.password::string",
+	"mysql": "secret::${Stage}/${region}/fake_db/connection::MySqlData",
+	"redshifturl": "ssm::My${Stage}Parameter::string",
+	"defaultNumRetries": 23,
+	"weather": {
+		"inner": {
+			"service": "secret",
+			"key": "${stage}/fake_db/connection.password",
+			"type": "string",
+			"options": {
+				"resolve": "runtime"
+			}
+		},
+		"inner3": {
+			"service": "secret",
+			"key": "${stage}/fake_db/connection.password",
+			"type": "string",
+			"options": {
+				"resolve": "deploy"
+			}
+		},
+		"inner2": {
+			"inner3": "stack::WeatherDashloaderLogGroup::string",
+			"inner8": "stack::WeatherDashprocessorLogGroup"
+		}
+	}
+}

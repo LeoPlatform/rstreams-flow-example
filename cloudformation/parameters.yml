@@ -1,0 +1,5 @@
+Parameters:
+  RStreamsBus:
+    Type: AWS::SSM::Parameter::Value<String>
+    Description: "Name of the RStreams Bus stack"
+    MinLength: 1

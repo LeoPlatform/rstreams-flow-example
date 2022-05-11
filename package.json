@@ -1,0 +1,48 @@
+{
+  "name": "rstreams-example",
+  "version": "0.0.1",
+  "description": "description_of_microservice",
+  "private": true,
+  "scripts": {
+    "coverage-all": "node ./node_modules/nyc/bin/nyc.js --all node ./node_modules/mocha/bin/mocha --timeout 5000 \"./{,!(node_modules)/**/}*.utest.js\"",
+    "coverage": "node ./node_modules/nyc/bin/nyc.js node ./node_modules/mocha/bin/mocha --timeout 5000 \"./{,!(node_modules)/**/}*.utest.js\"",
+    "utest": "mocha \"**/*.utest.js\"",
+    "package": "serverless package",
+    "deploy-dev": "serverless deploy --package ./.serverless --region us-west-2 --stage dev",
+    "test-sls": "npx serverless invoke-bot --stage dev --runner sls --function",
+    "test": "serverless invoke-bot --stage dev --function",
+    "watch": "tsc -w",
+    "watch-config": "serverless watch-config",
+    "webpack": "webpack",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "axios": "^0.26.1",
+    "leo-sdk": "^6.0.3"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.93",
+    "@types/chai": "^4.3.0",
+    "@types/mocha": "^9.1.0",
+    "@types/node": "^16.11.12",
+    "@types/pumpify": "^1.4.1",
+    "@types/sinon": "^10.0.11",
+    "@types/sinon-chai": "^3.2.8",
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0",
+    "chai": "^4.2.0",
+    "cross-env": "^7.0.3",
+    "cross-env-file": "^1.0.0",
+    "mocha": "^9.2.2",
+    "nyc": "^15.1.0",
+    "serverless": "^3.12.0",
+    "serverless-convention": "^2.0.0",
+    "serverless-leo": "^3.0.1",
+    "serverless-webpack": "^5.7.0",
+    "sinon": "^13.0.1",
+    "sinon-chai": "^3.7.0",
+    "ts-loader": "^9.2.3",
+    "typescript": "^4.6.2",
+    "webpack": "^5.26.3"
+  }
+}

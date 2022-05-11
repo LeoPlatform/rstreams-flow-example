@@ -1,0 +1,78 @@
+service: rstreams-example
+
+frameworkVersion: '3'
+useDotenv: true
+
+plugins:
+  - serverless-leo
+  - serverless-webpack
+
+package:
+  individually: true
+#  artifact: ${opt:artifact, ""}
+
+custom:
+  leo:
+    rsfVersion: 3,
+    rsfTemplateTokens:
+      project-name: "rstreams-example"
+      rstreams-bus: "ClintTestBus-Bus"
+      region: "us-west-2"
+
+    botIdExcludeStage: true
+    configurationPath: project-config-new.def.json
+
+    rsfConfigResolutionType: secretsmanager
+    replicationRegions: 
+      - us-east-1 => us-west-2
+      - us-west-2 => us-east-1 
+      - europe-west-2
+
+  convention:
+    functions:
+      folders:
+        - api
+        - bots
+      pattern:
+        - '*.yml'
+        - '*.yaml'
+    resources:
+      folders:
+        - cloudformation
+      pattern:
+        - '*.yml'
+        - '*.yaml'
+        - '*.js'
+        - '*.json'
+        - '*.ts'
+  included: ${file(./node_modules/serverless-convention/index.js)}
+  
+  leoStack: ${RStreamsBus}
+  dev:
+    stackParameters:
+      - ParameterKey: RStreamsBus
+        ParameterValue: ClintTestBus-Bus
+      - ParameterKey: MyStage2
+        ParameterValue: Prod
+  test:
+    # stackParameters:
+  staging:
+    # stackParameters:
+  prod:
+    # stackParameters:
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  versionFunctions: false
+  # deploymentBucket: ${self:custom.${opt:region, 'no-region'}.deploymentBucket}
+  stage: ${opt:stage, 'dev'}
+  
+  stackParameters: ${self:custom.${self:provider.stage}.stackParameters}
+
+functions:
+  - ${self:custom.included.functions} # Auto-include functions using serverless-convention
+
+resources:
+  - ${self:custom.included.resources} # Auto-include resources using serverless-convention
+
