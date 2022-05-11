@@ -20,67 +20,67 @@ export const handler = botWrapper(async function lambdaHandler(event: ProcessorB
 		inQueue: event.queue,
 		outQueue: event.destination,
 		config: undefined,
-		transform: function (weather, _wrapper, done) {
-			if (weather == null) {
+		transform: function (weatherData, _eventWrapper, done) {
+			if (weatherData == null) {
 				done(null, true);
 				return;
 			}
-			done(null, mapWeatherDataToWeatherDataTransformed(weather));
+			done(null, mapWeatherDataToWeatherDataTransformed(weatherData));
 		}
 	});
 });
 
 
-function mapWeatherDataToWeatherDataTransformed(weather: WeatherData): WeatherDataTransformed {
+function mapWeatherDataToWeatherDataTransformed(weatherData: WeatherData): WeatherDataTransformed {
 	return {
-		location: weather.location,
-		cloud_ceiling: weather.cloudCeiling,
-		cloud_cover_phrase: weather.cloudCoverPhrase,
-		day_of_week: weather.dayOfWeek,
-		is_daytime: weather.dayOrNight === "D",
-		expiration_time_utc: weather.expirationTimeUtc,
+		location: weatherData.location,
+		cloud_ceiling: weatherData.cloudCeiling,
+		cloud_cover_phrase: weatherData.cloudCoverPhrase,
+		day_of_week: weatherData.dayOfWeek,
+		is_daytime: weatherData.dayOrNight === "D",
+		expiration_time_utc: weatherData.expirationTimeUtc,
 		precipitation: {
-			hour_1: weather.precip1Hour,
-			hour_6: weather.precip6Hour,
-			hour_24: weather.precip24Hour
+			hour_1: weatherData.precip1Hour,
+			hour_6: weatherData.precip6Hour,
+			hour_24: weatherData.precip24Hour
 		},
 		presure: {
-			altimeter: weather.pressureAltimeter,
-			change: weather.pressureChange,
-			mean_sea_level: weather.pressureMeanSeaLevel,
-			pressure_tendency_trend: weather.pressureTendencyTrend
+			altimeter: weatherData.pressureAltimeter,
+			change: weatherData.pressureChange,
+			mean_sea_level: weatherData.pressureMeanSeaLevel,
+			pressure_tendency_trend: weatherData.pressureTendencyTrend
 		},
-		relative_humidity: weather.relativeHumidity,
+		relative_humidity: weatherData.relativeHumidity,
 		snow: {
-			hour_1: weather.snow1Hour,
-			hour_6: weather.snow6Hour,
-			hour_24: weather.snow24Hour
+			hour_1: weatherData.snow1Hour,
+			hour_6: weatherData.snow6Hour,
+			hour_24: weatherData.snow24Hour
 		},
-		sunrise_time_utc: weather.sunriseTimeUtc,
-		sunset_time_utc: weather.sunsetTimeUtc,
+		sunrise_time_utc: weatherData.sunriseTimeUtc,
+		sunset_time_utc: weatherData.sunsetTimeUtc,
 		temperature: {
-			current: weather.temperature,
-			change_hour_24: weather.temperatureChange24Hour,
-			dew_point: weather.temperatureDewPoint,
-			feels_like: weather.temperatureFeelsLike,
-			heat_index: weather.temperatureHeatIndex,
-			max_hour_24: weather.temperatureMax24Hour,
-			max_since_7_am: weather.temperatureMaxSince7Am,
-			min_hour_24: weather.temperatureMin24Hour,
-			wind_chill: weather.temperatureWindChill
+			current: weatherData.temperature,
+			change_hour_24: weatherData.temperatureChange24Hour,
+			dew_point: weatherData.temperatureDewPoint,
+			feels_like: weatherData.temperatureFeelsLike,
+			heat_index: weatherData.temperatureHeatIndex,
+			max_hour_24: weatherData.temperatureMax24Hour,
+			max_since_7_am: weatherData.temperatureMaxSince7Am,
+			min_hour_24: weatherData.temperatureMin24Hour,
+			wind_chill: weatherData.temperatureWindChill
 		},
-		valid_time_utc: weather.validTimeUtc,
-		visibility: weather.visibility,
+		valid_time_utc: weatherData.validTimeUtc,
+		visibility: weatherData.visibility,
 		wind: {
-			direction: weather.windDirection,
-			direction_cardinal: weather.windDirectionCardinal,
-			gust: weather.windGust,
-			speed: weather.windSpeed
+			direction: weatherData.windDirection,
+			direction_cardinal: weatherData.windDirectionCardinal,
+			gust: weatherData.windGust,
+			speed: weatherData.windSpeed
 		},
 		wx_phase: {
-			long: weather.wxPhraseLong,
-			medium: weather.wxPhraseMedium,
-			short: weather.wxPhraseShort
+			long: weatherData.wxPhraseLong,
+			medium: weatherData.wxPhraseMedium,
+			short: weatherData.wxPhraseShort
 		}
 	};
 }

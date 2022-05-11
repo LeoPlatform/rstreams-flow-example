@@ -3,7 +3,9 @@ import { BotInvocationEvent, RStreamsContext } from "leo-sdk";
 import botWrapper from "leo-sdk/wrappers/cron";
 import { LatLng, WeatherData } from "../../lib/types";
 import axios from "axios";
-import configuration from "../../project-config-new";
+import projConfig from "../../project-config-new";
+const configuration = projConfig; // Typescript renames projConfig because of the import which prevents inspecting when debugging
+
 
 interface LoaderBotInvocationEvent extends BotInvocationEvent {
 	destination: string;
@@ -12,8 +14,7 @@ interface LoaderBotInvocationEvent extends BotInvocationEvent {
 // botid: ${self:service}-weather-loader
 export const handler = botWrapper(async function (event: LoaderBotInvocationEvent, context: RStreamsContext) {
 	console.log("Invocation Event:", JSON.stringify(event, null, 2));
-	console.log(configuration.defaultNumRetries, configuration.item.endpoint);
-	console.log(configuration);
+	console.log(configuration.defaultNumRetries, configuration.weather.inner);
 
 	const weatherData = await getWeather({ lat: 40.35, lng: -111.90 });
 
