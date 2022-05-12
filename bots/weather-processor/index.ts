@@ -1,4 +1,3 @@
-"use strict";
 import { RStreamsSdk } from "leo-sdk";
 import botWrapper from "leo-sdk/wrappers/cron";
 import { WeatherData, WeatherDataTransformed } from "../../lib/types";

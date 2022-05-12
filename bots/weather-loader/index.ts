@@ -1,4 +1,3 @@
-"use strict";
 import { BotInvocationEvent, RStreamsContext } from "leo-sdk";
 import botWrapper from "leo-sdk/wrappers/cron";
 import { LatLng, WeatherData } from "../../lib/types";
@@ -9,7 +8,6 @@ interface LoaderBotInvocationEvent extends BotInvocationEvent {
 	destination: string;
 }
 
-// botid: ${self:service}-weather-loader
 export const handler = botWrapper(async function (event: LoaderBotInvocationEvent, context: RStreamsContext) {
 	console.log("Invocation Event:", JSON.stringify(event, null, 2));
 
