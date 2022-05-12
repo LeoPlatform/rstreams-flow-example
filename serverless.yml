@@ -60,12 +60,6 @@ custom:
     # stackParameters:
   prod:
     # stackParameters:
-  # us-east-1:
-  #   deploymentBucket: leo-cli-publishbucket-19e80lsbylz0f
-  # us-west-2:
-  #   deploymentBucket: leo-cli-publishbucket-13ickrmrh6vyd
-  # no-region:
-  #   deploymentBucket: leo-cli-publishbucket-13ickrmrh6vyd
 
 provider:
   name: aws
