@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "axios": "^0.26.1",
-    "leo-sdk": "^6.0.6"
+    "leo-sdk": "^6.0.7"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.93",
