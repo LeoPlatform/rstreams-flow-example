@@ -16,7 +16,7 @@ custom:
     rsfVersion: 3,
     rsfTemplateTokens:
       project-name: "rstreams-example"
-      rstreams-bus: "ClintTestBus-Bus"
+      rstreams-bus: "ClintTestBus-Bus-1AU1ENWIRG4NO"
       region: "us-west-2"
 
     botIdExcludeStage: true
