@@ -21,8 +21,10 @@ custom:
 
     botIdExcludeStage: true
     configurationPath: project-config-new.def.json
-
-    rsfConfigResolutionType: secretsmanager
+    
+    rsfConfigType: secretsmanager
+    rsfConfigStages:
+      - some-stage
     rsfConfigReplicationRegions: 
       us-west-1:
         - us-west-2

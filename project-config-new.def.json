@@ -2,7 +2,7 @@
 	"item": {
 		"endpoint": "cf::${MyStage2}Auth-LeoAuth::string"
 	},
-	"mysqlPortRegion": "secret::${stage}/${region}/fake_db/connection.port::int",
+	"mysqlPortRegion": "secret::${stage}/${region}/fake_db/connection.port::int::resolve=runtime",
 	"mysqlPortRegion2": "secret::${Stage}/${region}/fake_db/connection.port::int",
 	"mysqlPort": "secret::${stage}/${region}/fake_db/connection.port::int",
 	"mysqlPassword": "secret::${stage}/${region}/fake_db/connection.password::string",
