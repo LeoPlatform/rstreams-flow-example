@@ -1,4 +1,4 @@
-service: rstreams-example-3
+service: rstreams-example
 
 frameworkVersion: '3'
 useDotenv: true
@@ -22,7 +22,7 @@ custom:
     botIdExcludeStage: true
     configurationPath: project-config-new.def.json
     
-    rsfConfigType: secretsmanager
+    rsfConfigType: environment
     rsfConfigStages:
       - some-stage
     rsfConfigReplicationRegions: 

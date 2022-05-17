@@ -10,7 +10,7 @@
     "package": "serverless package",
     "deploy-dev": "serverless deploy --package ./.serverless --region us-west-2 --stage dev",
     "test-sls": "npx serverless invoke-bot --stage dev --runner sls --function",
-    "test": "serverless invoke-bot --stage dev --function",
+    "test": "serverless invoke-bot --stage dev --region us-west-2 --function",
     "watch": "tsc -w",
     "watch-config": "serverless watch-config",
     "webpack": "webpack",

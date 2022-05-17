@@ -2,6 +2,7 @@ import { BotInvocationEvent, RStreamsContext } from "leo-sdk";
 import botWrapper from "leo-sdk/wrappers/cron";
 import { LatLng, WeatherData } from "../../lib/types";
 import axios from "axios";
+import config from "../../project-config-new";
 
 
 interface LoaderBotInvocationEvent extends BotInvocationEvent {
@@ -10,7 +11,7 @@ interface LoaderBotInvocationEvent extends BotInvocationEvent {
 
 export const handler = botWrapper(async function (event: LoaderBotInvocationEvent, context: RStreamsContext) {
 	console.log("Invocation Event:", JSON.stringify(event, null, 2));
-
+	console.log(config);
 	const weatherData = await getWeather({ lat: 40.35, lng: -111.90 });
 
 	await context.sdk.putEvent(event.botId, event.destination, weatherData);
