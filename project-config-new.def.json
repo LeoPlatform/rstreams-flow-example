@@ -25,10 +25,6 @@
 			"options": {
 				"resolve": "deploy"
 			}
-		},
-		"inner2": {
-			"inner3": "stack::WeatherDashloaderLogGroup::string",
-			"inner8": "stack::WeatherDashprocessorLogGroup"
 		}
 	}
 }

@@ -16,10 +16,6 @@ export interface ProjectConfigNew {
 	weather: {
 		inner: string;
 		inner3: string;
-		inner2: {
-			inner3: string;
-			inner8: unknown;
-		};
 	};
 }
 
