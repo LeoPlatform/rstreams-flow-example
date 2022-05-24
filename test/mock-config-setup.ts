@@ -17,11 +17,7 @@ const mockProjectConfig: ProjectConfigNew = {
 	defaultNumRetries: 345,
 	weather: {
 		inner: "mock-weather-inner",
-		inner3: "mock-weather-inner3",
-		inner2: {
-			inner3: "mock-weather-inner2-inner3",
-			inner8: "mock-weather-inner2-inner8",
-		},
+		inner3: "mock-weather-inner3"
 	},
 };
 
