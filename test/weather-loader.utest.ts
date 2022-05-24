@@ -161,7 +161,7 @@ describe("weather-loader", function () {
 
 			const result = await promisify(handler)(createBotInvocationEvent("BotId", {
 				destination: "MockQueue"
-			}), createContext({ Timeout: 30 }));
+			}), createContext({ Timeout: 30 })) as Error;
 
 
 			expect(putEvent).not.called;
