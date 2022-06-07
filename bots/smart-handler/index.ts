@@ -26,7 +26,7 @@ interface InvocationEvent extends RSFQueueBotInvocationEvent {
 let metricReporter: DynamicMetricReporter = new DynamicMetricReporter((async () => {
 	let secret = await new AWS.SecretsManager({ region: process.env.AWS_REGION }).getSecretValue({ SecretId: "GlobalRSFMetricConfigs" }).promise();
 	let config = JSON.parse(secret.SecretString);
-	config.dontSendMetrics = true;
+	// config.dontSendMetrics = true;
 	return config;
 })());
 
@@ -41,6 +41,7 @@ let hooks: RStreamsBotHooks<InvocationEvent, never, number> =
 	},
 	handler: async function (inputEvent, context) {
 		console.log("EVENT:", inputEvent);
+		await metricReporter.start();
 		console.log(context.getRemainingTimeInMillis());
 		let sleepMS = ((parseInt(inputEvent.__cron.iid) || 0) * 10) + 100;
 		let queue = inputEvent.source;
@@ -61,17 +62,19 @@ let hooks: RStreamsBotHooks<InvocationEvent, never, number> =
 		};
 
 		metricReporter.log({
-			id: "my_metric_id",
-			value: 123,
+			id: "rsf-example.numbers",
+			value: Math.floor(Math.random() * 100),
 			tags: {
 				workflow: "rsf-example",
-
-				// app: "rsf-example",
-
-				// bot: inputEvent.botId,
-				// environment: "dev",
-				// bus: context.sdk.configuration.resources.LeoCron.split("-LeoCron-")[0],
-				// service: "rstreams",
+				rsf_type: "warning"
+			}
+		});
+		metricReporter.log({
+			id: "rsf-example.numbers",
+			value: Math.floor(Math.random() * 100),
+			tags: {
+				workflow: "rsf-example",
+				rsf_type: "error"
 			}
 		});
 
