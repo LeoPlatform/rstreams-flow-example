@@ -1,3 +1,4 @@
+import { deepEqualRemoveUndefined } from "./util";
 import sinon from "sinon";
 import chai, { assert, expect } from "chai";
 import sinonchai from "sinon-chai";
@@ -277,7 +278,7 @@ describe("weather-processor", function () {
 
 			expect(fromLeo).called;
 			expect(toLeo).called;
-			assert.deepEqual(dataWritten,
+			deepEqualRemoveUndefined(dataWritten,
 				[
 					{
 						"correlation_id": {
