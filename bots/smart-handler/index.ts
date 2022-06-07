@@ -24,10 +24,10 @@ interface InvocationEvent extends RSFQueueBotInvocationEvent {
 }
 
 let metricReporter: DynamicMetricReporter = new DynamicMetricReporter((async () => {
-	let secret = await new AWS.SecretsManager({ region: process.env.AWS_REGION }).getSecretValue({ SecretId: "GlobalDataDogConfig" }).promise();
-	let config: { key: string, site: string, dontSendMetrics: boolean } = JSON.parse(secret.SecretString);
+	let secret = await new AWS.SecretsManager({ region: process.env.AWS_REGION }).getSecretValue({ SecretId: "GlobalRSFMetricConfigs" }).promise();
+	let config = JSON.parse(secret.SecretString);
 	config.dontSendMetrics = true;
-	return { DataDog: config };
+	return config;
 })());
 
 
@@ -64,7 +64,14 @@ let hooks: RStreamsBotHooks<InvocationEvent, never, number> =
 			id: "my_metric_id",
 			value: 123,
 			tags: {
-				env: "test"
+				workflow: "rsf-example",
+
+				// app: "rsf-example",
+
+				// bot: inputEvent.botId,
+				// environment: "dev",
+				// bus: context.sdk.configuration.resources.LeoCron.split("-LeoCron-")[0],
+				// service: "rstreams",
 			}
 		});
 
@@ -77,26 +84,26 @@ let hooks: RStreamsBotHooks<InvocationEvent, never, number> =
 		await metricReporter.end();
 		return Math.random()
 	},
-	eventPartition: function (event: ReadEvent<MyInData>) {
-		return event.eid
-	},
-	maxInstances: 4,
-	instances: function (invocationEvent, fanoutData) {
-		let queue = refUtil.refId(invocationEvent.source);
-		let position = fanoutData.checkpoints?.read[queue]?.checkpoint;
-		let timePosition = position != null ? this.sdk.streams.eventIdToTimestamp(position) : null;
-		let duration = position === invocationEvent.requested_kinesis[queue] ? 0 : Date.now() - timePosition;
-		let instanceCount = Math.floor(duration / 1000 / 60) / 5;
-		console.log("INSTANCES:", instanceCount, duration)
-		return 5;
-	},
-	reduce: function (responses) {
-		console.log("REDUCE:", responses);
-		return responses.reduce((a, b) => {
-			if (b.error) { throw b.error; }
-			return a + b.data
-		}, 0);
-	}
+	// eventPartition: function (event: ReadEvent<MyInData>) {
+	// 	return event.eid
+	// },
+	// maxInstances: 4,
+	// instances: function (invocationEvent, fanoutData) {
+	// 	let queue = refUtil.refId(invocationEvent.source);
+	// 	let position = fanoutData.checkpoints?.read[queue]?.checkpoint;
+	// 	let timePosition = position != null ? this.sdk.streams.eventIdToTimestamp(position) : null;
+	// 	let duration = position === invocationEvent.requested_kinesis[queue] ? 0 : Date.now() - timePosition;
+	// 	let instanceCount = Math.floor(duration / 1000 / 60) / 5;
+	// 	console.log("INSTANCES:", instanceCount, duration)
+	// 	return 5;
+	// },
+	// reduce: function (responses) {
+	// 	console.log("REDUCE:", responses);
+	// 	return responses.reduce((a, b) => {
+	// 		if (b.error) { throw b.error; }
+	// 		return a + b.data
+	// 	}, 0);
+	// }
 };
 
 
