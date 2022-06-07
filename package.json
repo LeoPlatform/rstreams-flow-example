@@ -18,7 +18,8 @@
   },
   "dependencies": {
     "axios": "^0.26.1",
-    "leo-sdk": "^6.0.8"
+    "leo-sdk": "^6.0.8",
+    "rstreams-metrics": "^1.0.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.93",
