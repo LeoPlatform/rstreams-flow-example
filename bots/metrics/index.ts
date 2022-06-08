@@ -16,6 +16,7 @@ exports.handler = require("leo-sdk/wrappers/cron")(async function (_event: any, 
 
 	await metricReporter.end();
 });
+
 function doSomeWork() {
 	metricReporter.log({
 		id: "rsf-example.numbers",

@@ -69,6 +69,10 @@ provider:
   # deploymentBucket: ${self:custom.${opt:region, 'no-region'}.deploymentBucket}
   stage: ${opt:stage, 'dev'}
   
+  stackTags:
+    app: ${self:service}
+    environment: ${self:provider.stage}
+
   stackParameters: ${self:custom.${self:provider.stage}.stackParameters}
 
 functions:
