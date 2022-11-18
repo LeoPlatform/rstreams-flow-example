@@ -44,7 +44,6 @@ custom:
         - '*.yml'
         - '*.yaml'
         - '*.js'
-        - '*.json'
         - '*.ts'
   included: ${file(./node_modules/serverless-convention/index.js)}
   

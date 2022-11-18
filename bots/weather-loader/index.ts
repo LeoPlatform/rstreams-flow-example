@@ -11,11 +11,21 @@ interface LoaderBotInvocationEvent extends BotInvocationEvent {
 
 export const handler = botWrapper(async function (event: LoaderBotInvocationEvent, context: RStreamsContext) {
 	console.log("Invocation Event:", JSON.stringify(event, null, 2));
-	console.log(config);
+	console.log("config", config);
 	const weatherData = await getWeather({ lat: 40.35, lng: -111.90 });
 
-	await context.sdk.putEvent(event.botId, event.destination, weatherData);
+	//await context.sdk.putEvent(event.botId, event.destination, weatherData);
+	await putEventS3(context.sdk, event.botId, event.destination, weatherData);
+
 });
+
+async function putEventS3(sdk, botId, queue, data) {
+	const stream = sdk.load(botId, queue, { useS3: true });
+	stream.write(data);
+	await new Promise((resolve, reject) => {
+		stream.end((err, data) => err ? reject(err) : resolve(data));
+	});
+}
 
 async function getWeather(location: LatLng): Promise<WeatherData> {
 

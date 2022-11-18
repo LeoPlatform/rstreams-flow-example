@@ -13,6 +13,10 @@ export interface ProjectConfigNew {
 	mysql: MySqlData;
 	redshifturl: string;
 	defaultNumRetries: number;
+	array: (string|number|{
+			stuff: number;
+		})[];
+	array1: string[];
 	weather: {
 		inner: string;
 		inner3: string;

@@ -9,6 +9,20 @@
 	"mysql": "secret::${Stage}/${region}/fake_db/connection::MySqlData",
 	"redshifturl": "ssm::My${Stage}Parameter::string",
 	"defaultNumRetries": 23,
+	"array": [
+		"a",
+		"b",
+		"c",
+		234,
+		{
+			"stuff": 12435
+		}
+	],
+	"array1": [
+		"x",
+		"y",
+		"z"
+	],
 	"weather": {
 		"inner": {
 			"service": "secret",

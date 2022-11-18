@@ -14,12 +14,15 @@
     "watch": "tsc -w",
     "watch-config": "serverless watch-config",
     "webpack": "webpack",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "tsc": "tsc"
   },
   "dependencies": {
     "axios": "^0.26.1",
-    "leo-sdk": "^6.0.8",
-    "rstreams-metrics": "^1.0.0"
+    "duplexer2": "^0.1.4",
+    "leo-sdk": "^6.0.13",
+    "merge-sort-stream": "^1.0.5",
+    "rstreams-metrics": "^1.0.4"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.93",

@@ -9,3 +9,6 @@ weather-loader:
         destination: ${self:service}.weather
         cron: 0 */1 * * * * 
         extra_data: 123
+        tags:
+          - environment: ${self:provider.stage}
+          - custom-tag

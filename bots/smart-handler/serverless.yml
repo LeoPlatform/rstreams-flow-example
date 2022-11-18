@@ -10,3 +10,8 @@ smart-handler:
         destination: ${self:service}.smart
         cron: 0 */1 * * * * 
         extra_data: 123
+        codeOverrides:
+            source1: item-entity-old-new
+            instanceId1: 0
+            instanceCount1: ${file(tmp-config.json):instanceCount.${self:provider.stage}}
+        
